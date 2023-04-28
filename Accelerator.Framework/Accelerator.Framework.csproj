@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Web\" />
     <Folder Include="Resources\" />
     <Folder Include="Queries\" />
