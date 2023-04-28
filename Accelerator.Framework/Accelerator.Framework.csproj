@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Web\" />
-    <Folder Include="Resources\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 
