@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Autors\Entities\" />
     <Folder Include="Autors\Commands\" />
     <Folder Include="Autors\Repositories\" />
     <Folder Include="Autors\Queries\" />
-    <Folder Include="Courses\Entities\" />
     <Folder Include="Courses\Commands\" />
     <Folder Include="Courses\Repositories\" />
     <Folder Include="Courses\Queries\" />
