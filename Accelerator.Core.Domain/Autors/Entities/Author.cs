@@ -12,6 +12,8 @@ namespace Accelerator.Core.Domain.Autors.Entities
 
         public string LastName { get; set; }
 
+        public AuthorType AuthorType { get; set; }
+
         public DateTimeOffset DateOfBirth { get; set; }
 
         public DateTimeOffset? DateOfDeath { get; set; }

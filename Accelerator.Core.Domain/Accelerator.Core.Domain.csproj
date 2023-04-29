@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Autors\Commands\" />
     <Folder Include="Autors\Repositories\" />
-    <Folder Include="Autors\Queries\" />
     <Folder Include="Courses\Commands\" />
     <Folder Include="Courses\Repositories\" />
     <Folder Include="Courses\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Accelerator.Framework\Accelerator.Framework.csproj" />
   </ItemGroup>
 
 </Project>
