@@ -1,5 +1,6 @@
 ﻿using Accelerator.Core.Domain.Autors.Dtoes;
 using Accelerator.Core.Domain.Autors.Entities;
+using Accelerator.Framework.Extentions;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
