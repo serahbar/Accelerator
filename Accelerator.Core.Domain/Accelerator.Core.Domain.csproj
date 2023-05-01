@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Autors\Profiles\" />
     <Folder Include="Courses\Commands\" />
     <Folder Include="Courses\Repositories\" />
     <Folder Include="Courses\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
