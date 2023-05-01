@@ -9,5 +9,6 @@ namespace Accelerator.Core.Domain.Autors.Queries
 {
     public class AllAuthorsQuery:IQuery
     {
+      
     }
 }
