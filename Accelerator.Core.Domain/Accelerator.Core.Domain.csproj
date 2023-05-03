@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Courses\Commands\" />
-    <Folder Include="Courses\Repositories\" />
     <Folder Include="Courses\Queries\" />
   </ItemGroup>
 
