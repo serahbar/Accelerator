@@ -1,14 +1,9 @@
-﻿using Accelerator.Core.Domain.Autors.Dtoes;
-using Accelerator.Core.Domain.Autors.Entities;
+﻿using Accelerator.Core.Domain.Authors.Dtoes;
+using Accelerator.Core.Domain.Authors.Entities;
 using Accelerator.Framework.Extentions;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Accelerator.Core.Domain.Autors.Profiles
+namespace Accelerator.Core.Domain.Authors.Profiles
 {
     public class AuthorsProfile : Profile
     {

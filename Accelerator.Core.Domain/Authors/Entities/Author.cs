@@ -1,6 +1,6 @@
 ﻿using Accelerator.Core.Domain.Courses.Entities;
 
-namespace Accelerator.Core.Domain.Autors.Entities
+namespace Accelerator.Core.Domain.Authors.Entities
 {
     public class Author
     {

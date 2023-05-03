@@ -1,4 +1,4 @@
-﻿namespace Accelerator.Core.Domain.Autors.Entities
+﻿namespace Accelerator.Core.Domain.Authors.Entities
 {
     public enum AuthorType
     {

@@ -1,6 +1,6 @@
-﻿using Accelerator.Core.Domain.Autors.Entities;
+﻿using Accelerator.Core.Domain.Authors.Entities;
 
-namespace Accelerator.Core.Domain.Autors.Repositories
+namespace Accelerator.Core.Domain.Authors.Repositories
 {
     public interface IAuthorQueryRepository
     {

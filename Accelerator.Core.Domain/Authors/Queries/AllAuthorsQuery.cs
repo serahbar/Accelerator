@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Accelerator.Core.Domain.Autors.Queries
+namespace Accelerator.Core.Domain.Authors.Queries
 {
     public class AllAuthorsQuery:IQuery
     {
