@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Accelerator.Core.Domain.Courses.Dtoes
+{
+    public class CourseForUpdateDto : CourseForManipulationDto
+    {
+        [Required(ErrorMessage = "You should fill out a description.")]
+        public override string Description
+        {
+            get => base.Description; set => base.Description = value;
+        }
+    }
+}
