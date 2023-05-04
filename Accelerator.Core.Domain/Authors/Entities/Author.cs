@@ -1,12 +1,10 @@
 ﻿using Accelerator.Core.Domain.Courses.Entities;
+using Accelerator.Framework.Domain;
 
 namespace Accelerator.Core.Domain.Authors.Entities
 {
-    public class Author
+    public class Author:BaseEntity
     {
-
-        public Guid Id { get; set; }
-
 
         public string FirstName { get; set; }
 
