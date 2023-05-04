@@ -14,4 +14,11 @@
     <ProjectReference Include="..\Accelerator.Core.Domain\Accelerator.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authors\Configs\" />
+    <Folder Include="Authors\Repositories\" />
+    <Folder Include="Courses\Configs\" />
+    <Folder Include="Courses\Repositories\" />
+  </ItemGroup>
+
 </Project>
