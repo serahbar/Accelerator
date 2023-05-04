@@ -1,4 +1,4 @@
-﻿using Accelerator.Core.Domain.Autors.Entities;
+﻿using Accelerator.Core.Domain.Authors.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
