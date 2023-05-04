@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using System.Configuration;
+
 namespace Accelerator.Endpoints.WebAPI
 {
     internal static class StartupHelperExtensions
     {
+        public static IConfiguration Configuration { get; }
         // Add services to the container
         public static WebApplication ConfigureServices(
             this WebApplicationBuilder builder)
@@ -91,7 +95,8 @@ namespace Accelerator.Endpoints.WebAPI
 
             builder.Services.AddDbContext<AcceleratorDbContext>(options =>
             {
-                optionsc => c.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
+                options.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
+                //optionsc => c.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
             });
 
             builder.Services.AddAutoMapper(
