@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accelerator.Core.Domain.Courses.ValidationAttributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

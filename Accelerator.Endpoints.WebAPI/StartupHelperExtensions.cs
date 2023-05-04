@@ -1,5 +1,9 @@
-﻿using Accelerator.Infrastructures.Data.SqlServer;
+﻿using Accelerator.Core.Resources.Resources;
+using Accelerator.Infrastructures.Data.SqlServer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Newtonsoft.Json.Serialization;
 namespace Accelerator.Endpoints.WebAPI
 {
@@ -9,12 +13,20 @@ namespace Accelerator.Endpoints.WebAPI
         public static WebApplication ConfigureServices(
             this WebApplicationBuilder builder)
         {
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
             builder.Services.AddControllers(configure =>
             {
                 configure.ReturnHttpNotAcceptable = true;
                 configure.CacheProfiles.Add("240SecondsCacheProfile",
                     new() { Duration = 240 });
             })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(SharedResource));
+                })
+
             .AddNewtonsoftJson(setupAction =>
             {
                 setupAction.SerializerSettings.ContractResolver =
@@ -25,24 +37,24 @@ namespace Accelerator.Endpoints.WebAPI
             {
                 setupAction.InvalidModelStateResponseFactory = context =>
                 {
-                // create a validation problem details object
-                var problemDetailsFactory = context.HttpContext.RequestServices
-                        .GetRequiredService<ProblemDetailsFactory>();
+                    // create a validation problem details object
+                    var problemDetailsFactory = context.HttpContext.RequestServices
+                            .GetRequiredService<ProblemDetailsFactory>();
 
                     var validationProblemDetails = problemDetailsFactory
                         .CreateValidationProblemDetails(
                             context.HttpContext,
                             context.ModelState);
 
-                // add additional info not added by default
-                validationProblemDetails.Detail =
-                        "See the errors field for details.";
+                    // add additional info not added by default
+                    validationProblemDetails.Detail =
+                            "See the errors field for details.";
                     validationProblemDetails.Instance =
                         context.HttpContext.Request.Path;
 
-                // report invalid model state responses as validation issues
-                validationProblemDetails.Type =
-                        "https://courselibrary.com/modelvalidationproblem";
+                    // report invalid model state responses as validation issues
+                    validationProblemDetails.Type =
+                            "https://courselibrary.com/modelvalidationproblem";
                     validationProblemDetails.Status =
                         StatusCodes.Status422UnprocessableEntity;
                     validationProblemDetails.Title =
@@ -68,18 +80,18 @@ namespace Accelerator.Endpoints.WebAPI
                 }
             });
 
-           // builder.Services.AddTransient<IPropertyMappingService,
-              //  PropertyMappingService>();
+            // builder.Services.AddTransient<IPropertyMappingService,
+            //  PropertyMappingService>();
 
-           // builder.Services.AddTransient<IPropertyCheckerService,
-              //  PropertyCheckerService>();
+            // builder.Services.AddTransient<IPropertyCheckerService,
+            //  PropertyCheckerService>();
 
-            builder.Services.AddScoped<ICourseLibraryRepository,
-                CourseLibraryRepository>();
+            // builder.Services.AddScoped<ICourseLibraryRepository,
+            // CourseLibraryRepository>();
 
             builder.Services.AddDbContext<AcceleratorDbContext>(options =>
             {
-                options.UseSqlite(@"Data Source=library.db");
+                optionsc => c.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
             });
 
             builder.Services.AddAutoMapper(
@@ -139,7 +151,7 @@ namespace Accelerator.Endpoints.WebAPI
             {
                 try
                 {
-                    var context = scope.ServiceProvider.GetService<CourseLibraryContext>();
+                    var context = scope.ServiceProvider.GetService<AcceleratorDbContext>();
                     if (context != null)
                     {
                         await context.Database.EnsureDeletedAsync();
