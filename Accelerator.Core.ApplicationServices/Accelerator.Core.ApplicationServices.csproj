@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Authors\" />
     <Folder Include="Courses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Accelerator.Core.Domain\Accelerator.Core.Domain.csproj" />
+    <ProjectReference Include="..\Accelerator.Framework\Accelerator.Framework.csproj" />
   </ItemGroup>
 
 </Project>
