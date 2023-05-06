@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authors\Configs\" />
+    <Folder Include="Authors\Repositories\" />
     <Folder Include="Courses\Configs\" />
     <Folder Include="Courses\Repositories\" />
   </ItemGroup>
