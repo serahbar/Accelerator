@@ -25,37 +25,46 @@ namespace Accelerator.Infrastructures.Data.SqlServer
            new Author("Berry", "Griffin Beak Eldritch", "Ships")
            {
                Id = Guid.Parse("d28888e9-2ba9-473a-a40f-e38cb54f9b35"),
-               DateOfBirth = new DateTime(1980, 7, 23)
+               DateOfBirth = new DateTime(1980, 7, 23),
+               AuthorType=AuthorType.First
+
            },
            new Author("Nancy", "Swashbuckler Rye", "Rum")
            {
                Id = Guid.Parse("da2fd609-d754-4feb-8acd-c4f9ff13ba96"),
-               DateOfBirth = new DateTime(1978, 5, 21)
+               DateOfBirth = new DateTime(1978, 5, 21),
+               AuthorType = AuthorType.First
+
            },
            new Author("Eli", "Ivory Bones Sweet", "Singing")
            {
                Id = Guid.Parse("2902b665-1190-4c70-9915-b9c2d7680450"),
-               DateOfBirth = new DateTime(1957, 12, 16)
+               DateOfBirth = new DateTime(1957, 12, 16),
+               AuthorType = AuthorType.First
            },
            new Author("Arnold", "The Unseen Stafford", "Singing")
            {
                Id = Guid.Parse("102b566b-ba1f-404c-b2df-e2cde39ade09"),
-               DateOfBirth = new DateTime(1957, 3, 6)
+               DateOfBirth = new DateTime(1957, 3, 6),
+               AuthorType = AuthorType.First
            },
            new Author("Seabury", "Toxic Reyson", "Maps")
            {
                Id = Guid.Parse("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
-               DateOfBirth = new DateTime(1956, 11, 23)
+               DateOfBirth = new DateTime(1956, 11, 23),
+               AuthorType = AuthorType.Second
            },
            new Author("Rutherford", "Fearless Cloven", "General debauchery")
            {
                Id = Guid.Parse("2aadd2df-7caf-45ab-9355-7f6332985a87"),
-               DateOfBirth = new DateTime(1981, 4, 5)
+               DateOfBirth = new DateTime(1981, 4, 5),
+               AuthorType = AuthorType.Second
            },
            new Author("Atherton", "Crow Ridley", "Rum")
            {
                Id = Guid.Parse("2ee49fe3-edf2-4f91-8409-3eb25ce6ca51"),
-               DateOfBirth = new DateTime(1982, 10, 11)
+               DateOfBirth = new DateTime(1982, 10, 11),
+               AuthorType = AuthorType.Third
            }
            );
 
