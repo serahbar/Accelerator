@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using System.Configuration;
 
 namespace Accelerator.Endpoints.WebAPI
 {
@@ -30,14 +29,13 @@ namespace Accelerator.Endpoints.WebAPI
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 })
-
-            .AddNewtonsoftJson(setupAction =>
+                .AddNewtonsoftJson(setupAction =>
             {
                 setupAction.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver();
             })
-            .AddXmlDataContractSerializerFormatters()
-            .ConfigureApiBehaviorOptions(setupAction =>
+                .AddXmlDataContractSerializerFormatters()
+                .ConfigureApiBehaviorOptions(setupAction =>
             {
                 setupAction.InvalidModelStateResponseFactory = context =>
                 {
@@ -71,7 +69,6 @@ namespace Accelerator.Endpoints.WebAPI
                     };
                 };
             });
-
             builder.Services.Configure<MvcOptions>(config =>
             {
                 var newtonsoftJsonOutputFormatter = config.OutputFormatters
@@ -83,6 +80,8 @@ namespace Accelerator.Endpoints.WebAPI
                         .Add("application/vnd.marvin.hateoas+json");
                 }
             });
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             // builder.Services.AddTransient<IPropertyMappingService,
             //  PropertyMappingService>();
@@ -125,6 +124,8 @@ namespace Accelerator.Endpoints.WebAPI
         {
             if (app.Environment.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
             else
