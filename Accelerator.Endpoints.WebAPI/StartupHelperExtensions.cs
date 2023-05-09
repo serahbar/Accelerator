@@ -12,7 +12,7 @@ namespace Accelerator.Endpoints.WebAPI
 {
     internal static class StartupHelperExtensions
     {
-        public static IConfiguration Configuration { get; }
+        //public static IConfiguration Configuration { get; }
         // Add services to the container
         public static WebApplication ConfigureServices(
             this WebApplicationBuilder builder)
@@ -95,7 +95,8 @@ namespace Accelerator.Endpoints.WebAPI
 
             builder.Services.AddDbContext<AcceleratorDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
+                options.UseSqlServer("Server=.; Database=AcceleratorDb;Integrated Security=true;TrustServerCertificate=True");
+                //options.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
                 //optionsc => c.UseSqlServer(Configuration.GetConnectionString("AcceleratorCnn"));
             });
 
@@ -165,8 +166,8 @@ namespace Accelerator.Endpoints.WebAPI
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
-                    logger.LogError(ex, "An error occurred while migrating the database.");
+                    //var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+                    //logger.LogError(ex, "An error occurred while migrating the database.");
                 }
             }
         }
