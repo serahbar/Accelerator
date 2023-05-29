@@ -1,4 +1,7 @@
 ﻿using Accelerator.Core.Resources.Resources;
+using Accelerator.Framework.Commands;
+using Accelerator.Framework.Queries;
+using Accelerator.Framework.Resources;
 using Accelerator.Infrastructures.Data.SqlServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -24,6 +27,11 @@ namespace Accelerator.Endpoints.WebAPI
                     new() { Duration = 240 });
             })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                                {
+                                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                                        factory.Create(typeof(SharedResource));
+                                })
                 .AddDataAnnotationsLocalization(options =>
                 {
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
@@ -82,7 +90,9 @@ namespace Accelerator.Endpoints.WebAPI
             });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddTransient<IResourceManager, ResourceManager<SharedResource>>();
+            builder.Services.AddTransient<CommandDispatcher>();
+            builder.Services.AddTransient<QueryDispatcher>();
             // builder.Services.AddTransient<IPropertyMappingService,
             //  PropertyMappingService>();
 
