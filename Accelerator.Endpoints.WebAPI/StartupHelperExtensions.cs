@@ -89,7 +89,13 @@ namespace Accelerator.Endpoints.WebAPI
                 }
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c => {
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                c.IgnoreObsoleteActions();
+                c.IgnoreObsoleteProperties();
+                c.CustomSchemaIds(type => type.FullName);
+            }
+                );
             builder.Services.AddTransient<IResourceManager, ResourceManager<SharedResource>>();
             builder.Services.AddTransient<CommandDispatcher>();
             builder.Services.AddTransient<QueryDispatcher>();
@@ -142,6 +148,7 @@ namespace Accelerator.Endpoints.WebAPI
             {
                 app.UseExceptionHandler(appBuilder =>
                 {
+                    //TODO:Log Actuall Propblem In ExceptionHandler!!!!!!
                     appBuilder.Run(async context =>
                     {
                         context.Response.StatusCode = 500;
