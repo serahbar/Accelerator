@@ -32,7 +32,7 @@ namespace Accelerator.Endpoints.WebAPI.Services
           $"for <{typeof(TSource)},{typeof(TDestination)}");
         }
 
-        public bool ValidMappingExists<TSource, TDestination>(string fields)
+        public bool ValidMappingExistsFor<TSource, TDestination>(string fields)
         {
             var propertyMapping = GetPropertyMapping<TSource, TDestination>();
             if (string.IsNullOrWhiteSpace(fields))
