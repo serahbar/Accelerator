@@ -1,4 +1,4 @@
-﻿namespaceAccelerator.Core.ApplicationServices.Services
+﻿namespace Accelerator.Core.ApplicationServices.Services
 {
     public interface IPropertyCheckerService
     {

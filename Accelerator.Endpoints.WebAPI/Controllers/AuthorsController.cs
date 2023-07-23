@@ -1,7 +1,9 @@
-﻿using Accelerator.Core.Domain.Authors.Dtoes;
+﻿using Accelerator.Core.ApplicationServices.Services;
+using Accelerator.Core.Domain.Authors.Dtoes;
 using Accelerator.Core.Domain.Authors.Entities;
-using Accelerator.Endpoints.WebAPI.ResourceParameters;
-using Accelerator.Endpoints.WebAPI.Services;
+using Accelerator.Core.Domain.Authors.Queries;
+using Accelerator.Core.Domain.Authors.ResourceParameters;
+
 using Accelerator.Framework.Commands;
 using Accelerator.Framework.Queries;
 using Accelerator.Framework.Resources;
@@ -57,8 +59,8 @@ namespace Accelerator.Endpoints.WebAPI.Controllers
                         $"the resource: {authorsResourceParameters.Fields}"));
             }
 
-            var authorsFromRepo = _queryDispatcher.Dispatch<>
-       .GetAuthorsAsync(authorsResourceParameters);
+            var authorsFromRepo = _queryDispatcher
+                                .Dispatch<List<AuthorDto>>(new AuthorsQuery() { AuthorsResourceParameters= authorsResourceParameters });
             //TODO:Test
             return Ok();
         }

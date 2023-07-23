@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Accelerator.Core.ApplicationServices\Accelerator.Core.ApplicationServices.csproj" />
     <ProjectReference Include="..\Accelerator.Core.Domain\Accelerator.Core.Domain.csproj" />
   </ItemGroup>
 

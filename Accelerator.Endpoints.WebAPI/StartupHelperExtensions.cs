@@ -1,4 +1,5 @@
-﻿using Accelerator.Core.Resources.Resources;
+﻿using Accelerator.Core.ApplicationServices.Services;
+using Accelerator.Core.Resources.Resources;
 using Accelerator.Framework.Commands;
 using Accelerator.Framework.Queries;
 using Accelerator.Framework.Resources;
@@ -99,11 +100,11 @@ namespace Accelerator.Endpoints.WebAPI
             builder.Services.AddTransient<IResourceManager, ResourceManager<SharedResource>>();
             builder.Services.AddTransient<CommandDispatcher>();
             builder.Services.AddTransient<QueryDispatcher>();
-            // builder.Services.AddTransient<IPropertyMappingService,
-            //  PropertyMappingService>();
+            builder.Services.AddTransient< IPropertyMappingSerivce,
+             PropertyMappingSerivce>();
 
-            // builder.Services.AddTransient<IPropertyCheckerService,
-            //  PropertyCheckerService>();
+            builder.Services.AddTransient<IPropertyCheckerService,
+             PropertyCheckerService>();
 
             // builder.Services.AddScoped<ICourseLibraryRepository,
             // CourseLibraryRepository>();
