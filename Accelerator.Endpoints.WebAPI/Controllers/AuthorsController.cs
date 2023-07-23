@@ -1,9 +1,14 @@
 ﻿using Accelerator.Core.Domain.Authors.Dtoes;
+using Accelerator.Core.Domain.Authors.Entities;
+using Accelerator.Endpoints.WebAPI.ResourceParameters;
+using Accelerator.Endpoints.WebAPI.Services;
 using Accelerator.Framework.Commands;
 using Accelerator.Framework.Queries;
 using Accelerator.Framework.Resources;
 using Accelerator.Framework.Web;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Accelerator.Endpoints.WebAPI.Controllers
 {
@@ -11,17 +16,49 @@ namespace Accelerator.Endpoints.WebAPI.Controllers
     [Route("api/authors")]
     public class AuthorsController : BaseApiController
     {
-
-
+        private readonly IPropertyMappingSerivce _propertyMappingService;
+        private readonly IPropertyCheckerService _propertyCheckerService;
+        private readonly IMapper _mapper;
+        private readonly ProblemDetailsFactory _problemDetailsFactory;
         public AuthorsController(CommandDispatcher commandDispatcher,
-                QueryDispatcher queryDispatcher,
-                IResourceManager resourceManager) : base(commandDispatcher, queryDispatcher, resourceManager)
+                        QueryDispatcher queryDispatcher,
+                        IMapper mapper,
+                        IPropertyMappingSerivce propertyMappingService,
+                        IPropertyCheckerService propertyCheckerService,
+                        ProblemDetailsFactory problemDetailsFactory,
+                        IResourceManager resourceManager) : base(commandDispatcher, queryDispatcher, resourceManager)
         {
+            _mapper = mapper ??
+     throw new ArgumentNullException(nameof(mapper));
+            _propertyMappingService = propertyMappingService ??
+                throw new ArgumentNullException(nameof(propertyMappingService));
+            _propertyCheckerService = propertyCheckerService ??
+                throw new ArgumentNullException(nameof(propertyCheckerService));
+            _problemDetailsFactory = problemDetailsFactory ??
+    throw new ArgumentNullException(nameof(problemDetailsFactory));
         }
         [HttpGet(Name = "GetAuthors")]
         public async Task<IActionResult> GetAuthors(
             [FromQuery] AuthorsResourceParameters authorsResourceParameters)
         {
+            if (!_propertyMappingService
+                    .ValidMappingExistsFor<AuthorDto, Author>(
+        authorsResourceParameters.OrderBy))
+            {
+                return BadRequest();
+            }
+            if (!_propertyCheckerService.TypeHasProperties<AuthorDto>
+                        (authorsResourceParameters.Fields))
+            {
+                return BadRequest(
+                    _problemDetailsFactory.CreateProblemDetails(HttpContext,
+                        statusCode: 400,
+                        detail: $"Not all requested data shaping fields exist on " +
+                        $"the resource: {authorsResourceParameters.Fields}"));
+            }
+
+            var authorsFromRepo = _queryDispatcher.Dispatch<>
+       .GetAuthorsAsync(authorsResourceParameters);
             //TODO:Test
             return Ok();
         }
