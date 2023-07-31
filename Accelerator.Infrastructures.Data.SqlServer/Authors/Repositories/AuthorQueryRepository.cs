@@ -34,7 +34,47 @@ namespace Accelerator.Infrastructures.Data.SqlServer.Authors.Repositories
 
         public PagedList<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters)
         {
-            throw new NotImplementedException();
+            if (authorsResourceParameters == null)
+            {
+                throw new ArgumentNullException(nameof(authorsResourceParameters));
+            }
+
+            //if (string.IsNullOrWhiteSpace(authorsResourceParameters.MainCategory)
+            //    && string.IsNullOrWhiteSpace(authorsResourceParameters.SearchQuery))
+            //{
+            //    return await GetAuthorsAsync();
+            //}
+
+            // collection to start from
+            var collection = _db.Authors as IQueryable<Author>;
+
+            if (!string.IsNullOrWhiteSpace(authorsResourceParameters.MainCategory))
+            {
+                var mainCategory = authorsResourceParameters.MainCategory.Trim();
+                collection = collection.Where(a => a.MainCategory == mainCategory);
+            }
+
+            if (!string.IsNullOrWhiteSpace(authorsResourceParameters.SearchQuery))
+            {
+                var searchQuery = authorsResourceParameters.SearchQuery.Trim();
+                collection = collection.Where(a => a.MainCategory.Contains(searchQuery)
+                   || a.FirstName.Contains(searchQuery)
+                   || a.LastName.Contains(searchQuery));
+            }
+
+            if (!string.IsNullOrWhiteSpace(authorsResourceParameters.OrderBy))
+            {
+                // get property mapping dictionary
+                var authorPropertyMappingDictionary = _propertyMappingService
+                    .GetPropertyMapping<AuthorDto, Author>();
+
+                collection = collection.ApplySort(authorsResourceParameters.OrderBy,
+                    authorPropertyMappingDictionary);
+            }
+
+            return  PagedList<Author>.Create(collection,
+                 authorsResourceParameters.PageNumber,
+                 authorsResourceParameters.PageSize);
         }
 
         public async Task<PagedList<Author>> GetAuthorsAsync(AuthorsResourceParameters authorsResourceParameters)

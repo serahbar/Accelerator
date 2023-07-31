@@ -1,9 +1,15 @@
-﻿using Accelerator.Core.ApplicationServices.Services;
+﻿using Accelerator.Core.ApplicationServices.Authors.Queries;
+using Accelerator.Core.ApplicationServices.Services;
+using Accelerator.Core.Domain.Authors.Entities;
+using Accelerator.Core.Domain.Authors.Queries;
+using Accelerator.Core.Domain.Authors.Repositories;
 using Accelerator.Core.Resources.Resources;
 using Accelerator.Framework.Commands;
+using Accelerator.Framework.Extentions;
 using Accelerator.Framework.Queries;
 using Accelerator.Framework.Resources;
 using Accelerator.Infrastructures.Data.SqlServer;
+using Accelerator.Infrastructures.Data.SqlServer.Authors.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -106,6 +112,9 @@ namespace Accelerator.Endpoints.WebAPI
             builder.Services.AddTransient<IPropertyCheckerService,
              PropertyCheckerService>();
 
+            builder.Services.AddScoped<IAuthorQueryRepository,
+            AuthorQueryRepository>();
+            builder.Services.AddTransient<IQueryHandler<AuthorsQuery, PagedList<Author>>, AuthorsQueryHandler>();
             // builder.Services.AddScoped<ICourseLibraryRepository,
             // CourseLibraryRepository>();
 
