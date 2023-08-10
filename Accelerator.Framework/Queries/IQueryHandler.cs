@@ -10,5 +10,6 @@ namespace Accelerator.Framework.Queries
     where TQuery : IQuery
     {
         TResult Handle(TQuery query);
+        Task<TResult> HandleAsync(TQuery query);
     }
 }

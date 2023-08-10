@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Accelerator.Framework.Extentions
 {
-    public class PagedList<T>:List<T>
+    public class PagedList<T> : List<T>
     {
         public int CurrentPage { get; private set; }
         public int TotalPages { get; private set; }
@@ -31,6 +26,14 @@ namespace Accelerator.Framework.Extentions
             var count = source.Count();
             var items = await source.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize).ToListAsync();
+            return new PagedList<T>(items, count, pageNumber, pageSize);
+        }
+        public static PagedList<T> Create(
+            IQueryable<T> source, int pageNumber, int pageSize)
+        {
+            var count = source.Count();
+            var items = source.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize).ToList();
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }
     }

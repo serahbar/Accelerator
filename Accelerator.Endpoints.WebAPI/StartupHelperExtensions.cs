@@ -1,5 +1,15 @@
-﻿using Accelerator.Core.Resources.Resources;
+﻿using Accelerator.Core.ApplicationServices.Authors.Queries;
+using Accelerator.Core.ApplicationServices.Services;
+using Accelerator.Core.Domain.Authors.Entities;
+using Accelerator.Core.Domain.Authors.Queries;
+using Accelerator.Core.Domain.Authors.Repositories;
+using Accelerator.Core.Resources.Resources;
+using Accelerator.Framework.Commands;
+using Accelerator.Framework.Extentions;
+using Accelerator.Framework.Queries;
+using Accelerator.Framework.Resources;
 using Accelerator.Infrastructures.Data.SqlServer;
+using Accelerator.Infrastructures.Data.SqlServer.Authors.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -24,6 +34,11 @@ namespace Accelerator.Endpoints.WebAPI
                     new() { Duration = 240 });
             })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                                {
+                                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                                        factory.Create(typeof(SharedResource));
+                                })
                 .AddDataAnnotationsLocalization(options =>
                 {
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
@@ -81,14 +96,25 @@ namespace Accelerator.Endpoints.WebAPI
                 }
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c => {
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                c.IgnoreObsoleteActions();
+                c.IgnoreObsoleteProperties();
+                c.CustomSchemaIds(type => type.FullName);
+            }
+                );
+            builder.Services.AddTransient<IResourceManager, ResourceManager<SharedResource>>();
+            builder.Services.AddTransient<CommandDispatcher>();
+            builder.Services.AddTransient<QueryDispatcher>();
+            builder.Services.AddTransient< IPropertyMappingSerivce,
+             PropertyMappingSerivce>();
 
-            // builder.Services.AddTransient<IPropertyMappingService,
-            //  PropertyMappingService>();
+            builder.Services.AddTransient<IPropertyCheckerService,
+             PropertyCheckerService>();
 
-            // builder.Services.AddTransient<IPropertyCheckerService,
-            //  PropertyCheckerService>();
-
+            builder.Services.AddScoped<IAuthorQueryRepository,
+            AuthorQueryRepository>();
+            builder.Services.AddTransient<IQueryHandler<AuthorsQuery, PagedList<Author>>, AuthorsQueryHandler>();
             // builder.Services.AddScoped<ICourseLibraryRepository,
             // CourseLibraryRepository>();
 
@@ -132,6 +158,7 @@ namespace Accelerator.Endpoints.WebAPI
             {
                 app.UseExceptionHandler(appBuilder =>
                 {
+                    //TODO:Log Actuall Propblem In ExceptionHandler!!!!!!
                     appBuilder.Run(async context =>
                     {
                         context.Response.StatusCode = 500;
